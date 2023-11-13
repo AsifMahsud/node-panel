@@ -1,6 +1,6 @@
 const express = require('express');
 const { validateSignupInput } = require('../requests/validation');
-
+const db = require('../db/database')
 const router = express.Router();
 
 const users = {};
@@ -21,13 +21,13 @@ router.post('/signup', (req, res) => {
     password,
   } = req.body;
 
-    addUser({
+    db.addUser({
       first_name,
       last_name,
       creator_name,
       email,
       phone_number,
-      password, // In a real-world scenario, you would hash the password
+      password,
     });
 
   res.json({ message: 'Signup successful!' });

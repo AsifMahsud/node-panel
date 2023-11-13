@@ -1,14 +1,8 @@
-// validation.js
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('database.sqlite');
 
-// Sample user data (in-memory for this example)
 const users = {};
 
-// Validate if the email is unique
-const isEmailUnique = (email) => {
-  return !users[email];
-};
-
-// Basic input validation
 const validateSignupInput = (data) => {
   const {
     first_name,
@@ -38,10 +32,6 @@ const validateSignupInput = (data) => {
 
   if (password !== password_confirmation) {
     errors.push('Passwords do not match.');
-  }
-
-  if (!isEmailUnique(email)) {
-    errors.push('Email is already registered.');
   }
 
   return errors;
