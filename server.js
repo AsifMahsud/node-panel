@@ -16,8 +16,8 @@ app.use(require('express-session')({ secret: process.env.SECRET_KEY, resave: tru
 app.use(passport.initialize());
 app.use(passport.session());
 
-const GOOGLE_CLIENT_ID = '265346054036-gmkifhn3v4kogem480ofg7a6n7198m4t.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = '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';
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 passport.use(
     new GoogleStrategy(
       {

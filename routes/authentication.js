@@ -39,4 +39,15 @@ router.post('/signup', async(req, res) => {
   }
 });
 
+router.get('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.error('Error logging out:', err);
+      res.status(500).json({ error: 'An unexpected error occurred during logout.' });
+    } else {
+      res.redirect('/');
+    }
+  });
+});
+
 module.exports = router;
