@@ -1,0 +1,22 @@
+{
+  "name": "node-panel",
+  "version": "1.0.0",
+  "description": "functional back-end for two pages of an admin panel, consisting of the signup flow and home/dashboard page",
+  "main": "n",
+  "scripts": {
+    "test": "mocha",
+    "start": "nodemon server.js"
+  },
+  "author": "Muhammad Asif",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0"
+  }
+}
