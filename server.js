@@ -1,7 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan');
-const jwt = require('jsonwebtoken');
 const signupRoutes = require('./routes/authentication');
 const { verifyToken } = require('./middlewares/auth');
 

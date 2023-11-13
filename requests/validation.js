@@ -27,7 +27,6 @@ const validateSignupInput = (data) => {
   ) {
     errors.push('All fields are required.');
   }
-
   if (password !== password_confirmation) {
     errors.push('Passwords do not match.');
   }

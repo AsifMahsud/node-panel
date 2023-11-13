@@ -2,6 +2,7 @@ const express = require('express');
 const { validateSignupInput } = require('../requests/validation');
 const db = require('../db/database')
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 
 const users = {};
 
@@ -31,7 +32,8 @@ router.post('/signup', async(req, res) => {
   });
 
   if (result.success) {
-    res.json({ message: 'Signup successful!' });
+    const token = jwt.sign({ email, role: creator_name }, process.env.SECRET_KEY);
+    res.json({ token });
   } else {
     res.status(400).json({ error: result.message });
   }
