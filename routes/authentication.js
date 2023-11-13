@@ -37,15 +37,5 @@ router.post('/signup', async(req, res) => {
   }
 });
 
-router.post('/login', (req, res) => {
-  const { username, password } = req.body;
-
-  if (users[username] && users[username].password === password) {
-      const token = jwt.sign({ username, role: users[username].role }, secretKey);
-      res.json({ token });
-  } else {
-      res.status(401).json({ error: 'Invalid username or password' });
-  }
-});
 
 module.exports = router;
