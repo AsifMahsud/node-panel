@@ -32,7 +32,9 @@ app.post('/login', (req, res) => {
   const users = {};
 
   // ...
-  
+  const isEmailUnique = (email)=> {
+    return !users[email]
+  }
   app.post('/signup', (req, res) => {
     const {
       first_name,
