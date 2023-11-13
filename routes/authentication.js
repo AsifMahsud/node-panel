@@ -21,14 +21,14 @@ router.post('/signup', (req, res) => {
     password,
   } = req.body;
 
-  users[email] = {
-    first_name,
-    last_name,
-    creator_name,
-    email,
-    phone_number,
-    password,
-  };
+    addUser({
+      first_name,
+      last_name,
+      creator_name,
+      email,
+      phone_number,
+      password, // In a real-world scenario, you would hash the password
+    });
 
   res.json({ message: 'Signup successful!' });
 });
