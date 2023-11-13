@@ -23,11 +23,11 @@ passport.use(
       {
         clientID: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
-        callbackURL: 'https://e133-122-129-66-106.ngrok-free.app/auth/google/callback',
+        callbackURL: `${process.env.APP_URL}/auth/google/callback`,
       },
       (accessToken, refreshToken, profile, done) => {
         // Store user information in the session
-        return done(null, profile);
+        return done(null, profile, accessToken,);
       }
     )
   );
@@ -42,7 +42,7 @@ passport.use(
   });
 app.use(bodyParser.json())
 app.use(morgan('dev'))
-// app.use('/protected', verifyToken);
+// app.use('/creator-dashboard', verifyToken);
 app.use('/admin', signupRoutes);
 
 
@@ -55,17 +55,36 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'em
 
 // Handle the Google Sign-In callback
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-  res.redirect('/protected');
+  res.redirect('/creator-dashboard');
 });
 
-app.get('/protected', (req, res) => {
+app.get('/creator-dashboard', (req, res) => {
+    if(!req.header('Authorization')){
     if (req.isAuthenticated()) {
-        res.json(req.user);
+        res.send(req.user);
       } else {
-        res.send('Failed authentication');
+        res.status(401).json({ error: 'Unauthorized user' });
       }
-    
+    }else{
+       const tokenValidate = verifyToken(req, res);
+        if(tokenValidate.success){
+            const referer = req.get('Referer') || '';
+            const origin = req.get('Origin') || '';
+            const domain = referer ? new URL(referer).origin : origin;
+            res.redirect(domain)
+        }else{
+            res.status(401).json({ error: 'Unauthorized user' });
+
+        }
+    }
+
+
 });
+
+// app.use('/creator-dashboard',verifyToken)
+// app.get('/creator-dashboard',(req,res)=>{
+//     res.send("Homepage with custom signup")
+// })
 
 app.listen(port,()=>{
     console.log(`Serving at ${port}`)
