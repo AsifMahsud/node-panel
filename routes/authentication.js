@@ -33,7 +33,7 @@ router.post('/signup', (req, res) => {
   res.json({ message: 'Signup successful!' });
 });
 
-app.post('/login', (req, res) => {
+router.post('/login', (req, res) => {
   const { username, password } = req.body;
 
   if (users[username] && users[username].password === password) {
