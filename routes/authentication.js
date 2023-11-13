@@ -5,7 +5,7 @@ const router = express.Router();
 
 const users = {};
 
-router.post('/signup', (req, res) => {
+router.post('/signup', async(req, res) => {
   const validationErrors = validateSignupInput(req.body);
 
   if (validationErrors.length > 0) {
@@ -21,16 +21,20 @@ router.post('/signup', (req, res) => {
     password,
   } = req.body;
 
-    db.addUser({
-      first_name,
-      last_name,
-      creator_name,
-      email,
-      phone_number,
-      password,
-    });
+  const result = await db.addUser({
+    first_name,
+    last_name,
+    creator_name,
+    email,
+    phone_number,
+    password,
+  });
 
-  res.json({ message: 'Signup successful!' });
+  if (result.success) {
+    res.json({ message: 'Signup successful!' });
+  } else {
+    res.status(400).json({ error: result.message });
+  }
 });
 
 router.post('/login', (req, res) => {

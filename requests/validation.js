@@ -1,6 +1,5 @@
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('database.sqlite');
-
+const {errors} = require('../responses/error_bag')
 const users = {};
 
 const validateSignupInput = (data) => {
@@ -15,7 +14,6 @@ const validateSignupInput = (data) => {
     accept_terms_conditions,
   } = data;
 
-  const errors = [];
 
   if (
     !first_name ||
