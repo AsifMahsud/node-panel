@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan');
 const jwt = require('jsonwebtoken');
+const { validateSignupInput } = require('./validation')
 require('dotenv').config();
 
 
@@ -31,11 +32,13 @@ app.post('/login', (req, res) => {
 
   const users = {};
 
-  // ...
-  const isEmailUnique = (email)=> {
-    return !users[email]
-  }
+  
   app.post('/signup', (req, res) => {
+    const validationErrors = validateSignupInput(req.body);
+    if (validationErrors.length > 0) {
+        return res.status(400).json({ errors: validationErrors });
+      }
+
     const {
       first_name,
       last_name,
@@ -47,10 +50,6 @@ app.post('/login', (req, res) => {
       accept_terms_conditions,
     } = req.body;
   
-    // Validate the input (e.g., check if passwords match, email is unique, etc.)
-    // ...
-  
-    // Add the user to the database (for simplicity, using an in-memory object)
     users[email] = {
       first_name,
       last_name,
